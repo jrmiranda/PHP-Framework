@@ -12,10 +12,11 @@ $autoload['helpers'] = array(
 
 $autoload['libraries'] = array(
     'session',
+    'user',
     
 );
 
 $autoload['models'] = array(
-    //'teste/test'
+    //teste/teste,
     
 );

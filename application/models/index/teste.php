@@ -1,15 +1,17 @@
 <?php
-
 /**
  * Desenvolvido por Júnior Miranda
  */
 defined('SYSTEM_PATH') or die('Acesso direto bloqueado');
 
-class main_controller extends Controller {
+class teste_model extends Model {
 
     public function __construct() {
-        parent::__construct();
-        $this->lang->load('pt-br');
+        echo '<h2>test model loaded</h2>';
+    }
+    
+    public function teste() {
+        echo '<h2>teste teste</h2>';
     }
 
 }

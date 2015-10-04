@@ -8,11 +8,12 @@ class session {
 
     public function __construct() {
         if (session_id() === '') {
-            session_name('sess');
+            session_name(md5(ENCRYPT_KEY . 'session'));
             if (session_start()) {
                 return $this->refresh();
             }
         }
+        $this->refresh();
     }
 
     public function set($data, $value=NULL) {

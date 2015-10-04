@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Desenvolvido por Júnior Miranda
  */
@@ -27,16 +26,12 @@ class Router {
 
     public function route() {
         foreach ($this->routes as $key => $value) {
-            $key = str_replace('alpha', '[a-zA-Z]+', $key);
-            $key = str_replace('num', '[0-9]+', $key);
-            $key = str_replace('all', '[a-zA-Z0-9\.\_\-]+', $key);
-            $key = str_replace('*', '.+', $key);
-
-            if (preg_match('#^' . $key . '$#', $this->request)) {
-                if (strpos($value, '$') !== FALSE && strpos($key, '(') !== FALSE) {
-                    $value = preg_replace('#^' . $key . '$#', $value, $this->url);
+            $key = basic_regex($key);
+            
+            if (preg_match($key, $this->request)) {
+                if (strpos($value, '$') !== false) {
+                    $value = preg_replace($key, $value, $this->request);
                 }
-
                 $this->segments = explode('/', $value);
             }
         }
@@ -69,7 +64,6 @@ class Router {
         $this->output['model']['class'] = $this->segments[1] . MODEL_SUFIX;
 
         $this->output['param'] = $this->param;
-
         return $this->output;
     }
     

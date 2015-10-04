@@ -31,7 +31,7 @@ define('SYSTEM_PATH', BASE_PATH . 'system' . DS);
 define('CORE_PATH', SYSTEM_PATH . 'core' . DS);
 define('APP_PATH', BASE_PATH . 'application' . DS);
 define('CONFIG_PATH', APP_PATH . 'config' . DS);
-define('PUBLIC_PATH', BASE_PATH . 'public' . DS);
+define('RES_PATH', BASE_PATH . 'resources' . DS);
 
 define('MODULES_PATH', APP_PATH . 'modules' . DS);
 define('CONTROLLERS_PATH', APP_PATH . 'controllers' . DS);

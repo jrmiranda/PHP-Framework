@@ -8,29 +8,36 @@ class Input {
     private $post = array();
     private $get = array();
     private $cookie = array();
+    private $files = array();
     
     public function __construct() {
         $this->security = load('Security');
         
         if (isset($_POST)) {
             foreach ($_POST as $name => $value) {
-                $post[$name] = $this->security->input($value);
+                $this->post[$name] = $this->security->input($value);
             }
         }
         
         if (isset($_GET)) {
             foreach ($_GET as $name => $value) {
-                $get[$name] = $this->security->input($value);
+                $this->get[$name] = $this->security->input($value);
+            }
+        }
+        
+        if (isset($_FILES)) {
+            foreach ($_FILES as $name => $value) {
+                $this->files[$name] = $value;
             }
         }
     }
     
     public function post($index = NULL) {
         if ($index == NULL) {
-            return $post;
+            return $this->post;
         } else {
-            if (isset($post[$index])) {
-                return $post[$index];
+            if (isset($this->post[$index])) {
+                return $this->post[$index];
             }
         }
         return false;
@@ -38,10 +45,21 @@ class Input {
     
     public function get($index = NULL) {
         if ($index == NULL) {
-            return $get;
+            return $this->get;
         } else {
-            if (isset($get[$index])) {
-                return $get[$index];
+            if (isset($this->get[$index])) {
+                return $this->get[$index];
+            }
+        }
+        return false;
+    }
+    
+    public function files($index = NULL) {
+        if ($index == NULL) {
+            return $this->files;
+        } else {
+            if (isset($this->files[$index])) {
+                return $this->files[$index];
             }
         }
         return false;

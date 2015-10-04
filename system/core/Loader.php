@@ -13,7 +13,6 @@ class Loader {
         } else {
             $this->c = get_instance();
         }
-        echo 'class: ' . get_class($this->c) . '<br>';
     }
 
     public function helper($helper) {
@@ -67,7 +66,7 @@ class Loader {
         }
 
         if (class_exists($library)) {
-            get_instance()->$library = new $library($args);
+            $this->c->$library = new $library($args);
         } else {
             error('no_class', $library . '()', 'Library');
         }
@@ -76,10 +75,10 @@ class Loader {
     public function model($model = '') {
         if (is_array($model)) {
             foreach ($model as $single) {
-                $this->load_model($single, $root);
+                $this->load_model($single);
             }
         } else {
-            $this->load_model($model, $root);
+            $this->load_model($model);
         }
     }
 
@@ -117,11 +116,11 @@ class Loader {
             if (class_exists($mod_data['controller']['class'])) {
                 $this->c->$mod_data['controller']['class'] = new $mod_data['controller']['class']($mod_data['param']);
                 $this->c->$mod_data['controller']['class']->module = $mod_data['module'];
-
+                
                 if (AUTOLOAD_MODEL) {
                     if (file_exists($mod_data['model']['file'])) {
                         require_once $mod_data['model']['file'];
-
+                        
                         if (class_exists($mod_data['model']['class'])) {
                             $this->c->$mod_data['controller']['class']->model = new $mod_data['model']['class']();
                         } else {
@@ -133,8 +132,16 @@ class Loader {
                 }
 
                 if (method_exists($this->c->$mod_data['controller']['class'], $mod_data['controller']['method'])) {
+                    if (method_exists($this->c->$mod_data['controller']['class'], 'before')) {
+                        $this->c->$mod_data['controller']['class']->before($mod_data['param']);
+                    }
+                    
                     $method = $mod_data['controller']['method'];
                     $this->c->$mod_data['controller']['class']->$method($mod_data['param']);
+                    
+                    if (method_exists($this->c->$mod_data['controller']['class'], 'after')) {
+                        $this->c->$mod_data['controller']['class']->after($mod_data['param']);
+                    }
                 } else {
                     error('no_method', $mod_data['controller']['method'], 'Module');
                 }

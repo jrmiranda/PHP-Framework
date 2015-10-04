@@ -56,7 +56,7 @@ $Loader->module($URI->request(), 1);
 $Benchmark->tock('system');
 
 if (DEV_MODE) {
-    $Benchmark->show();
+    //$Benchmark->show();
 }
 
 

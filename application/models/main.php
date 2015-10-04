@@ -5,10 +5,10 @@
  */
 defined('SYSTEM_PATH') or die('Acesso direto bloqueado');
 
-class index_model extends main_model {
+class main_model extends Model {
 
-    public function test() {
-        echo "<br>index_model<br>";
+    public function lol() {
+        echo 'app_model<br>';
     }
 
 }

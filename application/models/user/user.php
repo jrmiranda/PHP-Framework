@@ -1,14 +1,13 @@
 <?php
-
 /**
  * Desenvolvido por Júnior Miranda
  */
 defined('SYSTEM_PATH') or die('Acesso direto bloqueado');
 
-class index_model extends main_model {
+class user_model extends Model {
 
     public function test() {
-        echo "<br>index_model<br>";
+        echo "ok!!!";
     }
 
 }
